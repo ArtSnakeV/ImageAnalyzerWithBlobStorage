@@ -1,0 +1,53 @@
+﻿@model IEnumerable<AzureHomework2t1.Models.ImageRecord>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Getting image description</title>
+    <link rel="stylesheet" href="@(Url.Content("~/css/style.css"))" />
+</head>
+<body>
+    <div class="container">
+        
+        @{
+            ViewData["Title"] = "Download image";
+        }
+
+        <h2>Download image</h2>
+
+        <form asp-action="UploadImage" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <button type="submit">Upload</button>
+        </form>
+
+        <h2> Image </h2>
+        <div id="downloadedimage">
+            @if (TempData["ImageData"] != null)
+            {
+                <img src="@Html.Raw(TempData["ImageItself"].ToString())" />
+            }
+        </div>
+        <h2> Description</h2>
+        <div id="imagedescription">
+            @if (TempData["ImageData"] != null)
+            {
+                @Html.Raw(TempData["ImageData"].ToString())
+            }
+        </div>
+        
+        <div>
+            <h3>All data</h3>
+            @foreach (var image in Model) 
+            {                
+                <div class="image-record">
+                    <div>@image.FileName</div>
+                    <img src="@image.Url" alt="@image.FileName" />
+                    <div style="text-wrap: pretty;">@image.Description</div>
+                    <br/>
+                </div> 
+            } 
+        </div>
+    </div>
+</body>
+</html>
+
